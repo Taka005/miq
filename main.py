@@ -6,12 +6,12 @@ import warnings
 # 警告無効化
 warnings.simplefilter("ignore")
 
-BASE_GRADATION_IMAGE = Image.open("images/base-gd.png")
-BASE_WHITE_IMAGE = Image.open("images/base.png")
+BASE_GD_IMAGE = Image.open("images/base-gd.png")
+BASE_IMAGE = Image.open("images/base.png")
 
 ICON = 'icon.png'
 
-MPLUS_FONT_16 = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
+MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 
 def draw_text(im,ofs,string,font="fonts/MPLUSRounded1c-Regular.ttf",size=16,color=(0,0,0,255),split_len=None,padding=4,auto_expand=False,disable_dot_wrap=False):
     
@@ -79,7 +79,7 @@ def draw_text(im,ofs,string,font="fonts/MPLUSRounded1c-Regular.ttf",size=16,colo
 
 content = "これはテストで生成されたものです"
 
-img = BASE_WHITE_IMAGE.copy()
+img = BASE_IMAGE.copy()
 
 icon = Image.open(ICON)
 icon = icon.resize((720,720),Image.LANCZOS)
@@ -89,7 +89,7 @@ icon_filtered = ImageEnhance.Brightness(icon)
 img.paste(icon_filtered.enhance(0.7),(0,0))
 
 # グラデーション描画
-img.paste(BASE_GRADATION_IMAGE,(0,0),BASE_GRADATION_IMAGE)
+img.paste(BASE_GD_IMAGE,(0,0),BASE_GD_IMAGE)
 
 # テキスト
 tx = ImageDraw.Draw(img)
@@ -108,6 +108,6 @@ id_y = name_y + tsize_name[1] + 4
 tsize_id = draw_text(img,(890,id_y),f"({id})",size=18,color=(180,180,180,255),split_len=45,disable_dot_wrap=True)
 
 # TakasumiBOT描画
-tx.text((1125, 694),"TakasumiBOT#7189",font=MPLUS_FONT_16,fill=(120,120,120,255))
+tx.text((1125, 694),"TakasumiBOT#7189",font=MPLUS_FONT,fill=(120,120,120,255))
 
 img.save("quote.png",quality=100)
