@@ -1,16 +1,17 @@
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from pilmoji import Pilmoji
+from flask import Flask, request, send_file
 import textwrap
+import requests
 import warnings
+import base64
+import io
 
 # 警告無効化
 warnings.simplefilter("ignore")
 
 BASE_GD_IMAGE = Image.open("images/base-gd.png")
 BASE_IMAGE = Image.open("images/base.png")
-
-ICON = 'icon.png'
-
 MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 
 def draw_text(im,ofs,string,font="fonts/MPLUSRounded1c-Regular.ttf",size=16,color=(0,0,0,255),split_len=None,padding=4,auto_expand=False,disable_dot_wrap=False):
@@ -76,37 +77,51 @@ def draw_text(im,ofs,string,font="fonts/MPLUSRounded1c-Regular.ttf",size=16,colo
 
     return (0,dy,real_y)
 
-content = "これはテストで生成されたものです"
+def make(name,id,content,icon):
+    img = BASE_IMAGE.copy()
 
-img = BASE_IMAGE.copy()
+    icon = Image.open(io.BytesIO(requests.get(icon).content))
+    icon = icon.resize((720,720),Image.LANCZOS)
+    icon = icon.convert("L")
+    icon_filtered = ImageEnhance.Brightness(icon)
 
-icon = Image.open(ICON)
-icon = icon.resize((720,720),Image.LANCZOS)
-icon = icon.convert("L")
-icon_filtered = ImageEnhance.Brightness(icon)
+    img.paste(icon_filtered.enhance(0.7),(0,0))
 
-img.paste(icon_filtered.enhance(0.7),(0,0))
+    # グラデーション描画
+    img.paste(BASE_GD_IMAGE,(0,0),BASE_GD_IMAGE)
 
-# グラデーション描画
-img.paste(BASE_GD_IMAGE,(0,0),BASE_GD_IMAGE)
+    # テキスト
+    tx = ImageDraw.Draw(img)
 
-# テキスト
-tx = ImageDraw.Draw(img)
+    # 文章描画
+    tsize_t = draw_text(img,(890,270),content,size=45,color=(255,255,255,255),split_len=16,auto_expand=True)
 
-# 文章描画
-tsize_t = draw_text(img,(890,270),content,size=45,color=(255,255,255,255),split_len=16,auto_expand=True)
+    # 名前描画
+    name_y = tsize_t[2] + 40
+    tsize_name = draw_text(img,(890,name_y),name,size=25,color=(255,255,255,255),split_len=25,disable_dot_wrap=True)
 
-# 名前描画
-name = 'Taka005#6668'
-name_y = tsize_t[2] + 40
-tsize_name = draw_text(img,(890,name_y),name,size=25,color=(255,255,255,255),split_len=25,disable_dot_wrap=True)
+    # ID描画
+    id_y = name_y + tsize_name[1] + 4
+    tsize_id = draw_text(img,(890,id_y),id,size=18,color=(180,180,180,255),split_len=45,disable_dot_wrap=True)
 
-# ID描画
-id = '000000000000'
-id_y = name_y + tsize_name[1] + 4
-tsize_id = draw_text(img,(890,id_y),f"({id})",size=18,color=(180,180,180,255),split_len=45,disable_dot_wrap=True)
+    # TakasumiBOT描画
+    tx.text((1125, 694),"TakasumiBOT#7189",font=MPLUS_FONT,fill=(120,120,120,255))
 
-# TakasumiBOT描画
-tx.text((1125, 694),"TakasumiBOT#7189",font=MPLUS_FONT,fill=(120,120,120,255))
+    file = io.BytesIO()
+    img.save(file,format="PNG",quality=95)
+    file.seek(0)
+    return file
 
-img.save("quote.png",quality=100)
+# APiサーバー
+app = Flask(__name__)
+@app.route("/",methods=["GET"])
+def main():
+    res = make(
+        request.args.get("name") or "名無し#0000",
+        request.args.get("id") or "0000000000000000000",
+        request.args.get("content") or "これはテストです",
+        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
+    )
+    return send_file(res,mimetype="image/png")
+# 起動
+app.run(host="0.0.0.0",port=5000)
