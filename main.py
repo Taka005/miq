@@ -1,6 +1,10 @@
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from pilmoji import Pilmoji
 import textwrap
+import warnings
+
+# 警告無効化
+warnings.simplefilter("ignore")
 
 BASE_GRADATION_IMAGE = Image.open("images/base-gd.png")
 BASE_WHITE_IMAGE = Image.open("images/base.png")
