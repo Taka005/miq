@@ -54,7 +54,6 @@ def draw_text(im,ofs,string,font="fonts/MPLUSRounded1c-Regular.ttf",size=16,colo
 
     draw_lines = []
 
-
     # 計算
     for line in lines:
         tsize = fontObj.getsize(line)
