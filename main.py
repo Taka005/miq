@@ -74,7 +74,7 @@ def draw_text(im,ofs,string,font="fonts/MPLUSRounded1c-Regular.ttf",size=16,colo
     return (0,dy,real_y)
 
 content = "これはテストで生成されたものです"
-# 引用する
+
 img = BASE_WHITE_IMAGE.copy()
 
 icon = Image.open(ICON)
@@ -84,26 +84,26 @@ icon_filtered = ImageEnhance.Brightness(icon)
 
 img.paste(icon_filtered.enhance(0.7),(0,0))
 
-# 黒グラデ合成
+# グラデーション描画
 img.paste(BASE_GRADATION_IMAGE,(0,0),BASE_GRADATION_IMAGE)
 
-# テキスト合成
+# テキスト
 tx = ImageDraw.Draw(img)
 
 # 文章描画
 tsize_t = draw_text(img,(890,270),content,size=45,color=(255,255,255,255),split_len=16,auto_expand=True)
 
 # 名前描画
-uname = 'Taka005#6668'
+name = 'Taka005#6668'
 name_y = tsize_t[2] + 40
-tsize_name = draw_text(img,(890,name_y),uname,size=25,color=(255,255,255,255),split_len=25,disable_dot_wrap=True)
+tsize_name = draw_text(img,(890,name_y),name,size=25,color=(255,255,255,255),split_len=25,disable_dot_wrap=True)
 
 # ID描画
 id = '000000000000'
 id_y = name_y + tsize_name[1] + 4
 tsize_id = draw_text(img,(890,id_y),f"({id})",size=18,color=(180,180,180,255),split_len=45,disable_dot_wrap=True)
 
-# クレジット
+# TakasumiBOT描画
 tx.text((1125, 694),"TakasumiBOT#7189",font=MPLUS_FONT_16,fill=(120,120,120,255))
 
 img.save("quote.png",quality=100)
