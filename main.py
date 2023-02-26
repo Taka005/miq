@@ -124,4 +124,4 @@ def main():
     )
     return send_file(res,mimetype="image/png")
 # 起動
-app.run(host="0.0.0.0",port=5000)
+app.run(host="0.0.0.0",port=80)

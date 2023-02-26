@@ -15,4 +15,4 @@ RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
 
 RUN pip install -r requirements.txt
-RUN python main.py
+CMD ["python3", "main.py"]
