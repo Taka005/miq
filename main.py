@@ -2,36 +2,35 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from pilmoji import Pilmoji
 import textwrap
 
-BASE_GRADATION_IMAGE = Image.open('base-gd.png')
-BASE_WHITE_IMAGE = Image.open('base.png')
+BASE_GRADATION_IMAGE = Image.open("images/base-gd.png")
+BASE_WHITE_IMAGE = Image.open("images/base.png")
 
 ICON = 'icon.png'
 
-MPLUS_FONT_16 = ImageFont.truetype('fonts/MPLUSRounded1c-Regular.ttf', size=16)
+MPLUS_FONT_16 = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 
-def draw_text(im, ofs, string, font='fonts/MPLUSRounded1c-Regular.ttf', size=16, color=(0,0,0,255), split_len=None, padding=4, auto_expand=False, emojis: list = [], disable_dot_wrap=False):
+def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0,0,0,255), split_len=None, padding=4, auto_expand=False, emojis: list = [], disable_dot_wrap=False):
     
     draw = ImageDraw.Draw(im)
     fontObj = ImageFont.truetype(font, size=size)
 
-    # 改行、句読点(。、.,)で分割した後にさらにワードラップを行う
     pure_lines = []
     pos = 0
-    l = ''
+    l = ""
 
     if not disable_dot_wrap:
         for char in string:
-            if char == '\n':
+            if char == "\n":
                 pure_lines.append(l)
-                l = ''
+                l = ""
                 pos += 1
-            elif char == '、' or char == ',':
-                pure_lines.append(l + ('、' if char == '、' else ','))
-                l = ''
+            elif char == "、" or char == ",":
+                pure_lines.append(l + ("、" if char == "、" else ","))
+                l = ""
                 pos += 1
-            elif char == '。' or char == '.':
-                pure_lines.append(l + ('。' if char == '。' else '.'))
-                l = ''
+            elif char == "。" or char == ".":
+                pure_lines.append(l + ("。" if char == "。" else "."))
+                l = ""
                 pos += 1
             else:
                 l += char
@@ -40,7 +39,7 @@ def draw_text(im, ofs, string, font='fonts/MPLUSRounded1c-Regular.ttf', size=16,
         if l:
             pure_lines.append(l)
     else:
-        pure_lines = string.split('\n')
+        pure_lines = string.split("\n")
 
     lines = []
 
@@ -74,13 +73,13 @@ def draw_text(im, ofs, string, font='fonts/MPLUSRounded1c-Regular.ttf', size=16,
 
     return (0, dy, real_y)
 
-content = "これってなんですかね？知らないんですけどwwww でも結局はあれだよね"
+content = "こっっっっっっっっっっbれってなんですかね？知らないんですけどwwww でも結局はあれだよね"
 # 引用する
 img = BASE_WHITE_IMAGE.copy()
 
 icon = Image.open(ICON)
 icon = icon.resize((720, 720), Image.ANTIALIAS)
-icon = icon.convert('L')
+icon = icon.convert("L")
 icon_filtered = ImageEnhance.Brightness(icon)
 
 img.paste(icon_filtered.enhance(0.7), (0,0))
@@ -104,9 +103,9 @@ tsize_name = draw_text(img, (base_x, name_y), uname, size=25, color=(255,255,255
 # ID描画
 id = '000000000000'
 id_y = name_y + tsize_name[1] + 4
-tsize_id = draw_text(img, (base_x, id_y), f'({id})', size=18, color=(180,180,180,255), split_len=45, disable_dot_wrap=True)
+tsize_id = draw_text(img, (base_x, id_y), f"({id})", size=18, color=(180,180,180,255), split_len=45, disable_dot_wrap=True)
 
 # クレジット
-tx.text((1125, 694), 'TakasumiBOT#7189', font=MPLUS_FONT_16, fill=(120,120,120,255))
+tx.text((1125, 694), "TakasumiBOT#7189", font=MPLUS_FONT_16, fill=(120,120,120,255))
 
-img.save('quote.png', quality=95)
+img.save("quote.png", quality=95)
