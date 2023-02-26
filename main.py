@@ -117,11 +117,11 @@ app = Flask(__name__)
 @app.route("/",methods=["GET"])
 def main():
     res = make(
-        request.args.get("name") or "名無し#0000",
-        request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "これはテストです",
-        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
+        request.args.get("name","名無し#0000"),
+        request.args.get("id","0000000000000000000"),
+        request.args.get("content","これはテストです"),
+        request.args.get("icon","https://cdn.discordapp.com/embed/avatars/0.png")
     )
     return send_file(res,mimetype="image/png")
 # 起動
-app.run(host="0.0.0.0",port=80)
+app.run(host="0.0.0.0",port=5000)
