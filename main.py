@@ -9,7 +9,7 @@ ICON = 'icon.png'
 
 MPLUS_FONT_16 = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 
-def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0,0,0,255), split_len=None, padding=4, auto_expand=False, emojis: list = [], disable_dot_wrap=False):
+def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0,0,0,255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
     
     draw = ImageDraw.Draw(im)
     fontObj = ImageFont.truetype(font, size=size)
@@ -67,7 +67,7 @@ def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16,
     adj_y = -30 * (len(draw_lines)-1)
     for dl in draw_lines:
         with Pilmoji(im) as p:
-            p.text((dl[0], (adj_y + dl[1])), dl[2], font=fontObj, fill=color, emojis=emojis, emoji_position_offset=(-4, 4))
+            p.text((dl[0], (adj_y + dl[1])), dl[2], font=fontObj, fill=color)
 
     real_y = ofs[1] + adj_y + dy
 
@@ -78,7 +78,7 @@ content = "こっっっっっっっっっっbれってなんですかね？知�
 img = BASE_WHITE_IMAGE.copy()
 
 icon = Image.open(ICON)
-icon = icon.resize((720, 720), Image.ANTIALIAS)
+icon = icon.resize((720, 720), Image.LANCZOS)
 icon = icon.convert("L")
 icon_filtered = ImageEnhance.Brightness(icon)
 
@@ -90,22 +90,20 @@ img.paste(BASE_GRADATION_IMAGE, (0,0), BASE_GRADATION_IMAGE)
 # テキスト合成
 tx = ImageDraw.Draw(img)
 
-base_x = 890
-
 # 文章描画
-tsize_t = draw_text(img, (base_x, 270), content, size=45, color=(255,255,255,255), split_len=16, auto_expand=True)
+tsize_t = draw_text(img, (890, 270), content, size=45, color=(255,255,255,255), split_len=16, auto_expand=True)
 
 # 名前描画
 uname = 'Taka005#6668'
 name_y = tsize_t[2] + 40
-tsize_name = draw_text(img, (base_x, name_y), uname, size=25, color=(255,255,255,255), split_len=25, disable_dot_wrap=True)
+tsize_name = draw_text(img, (890, name_y), uname, size=25, color=(255,255,255,255), split_len=25, disable_dot_wrap=True)
 
 # ID描画
 id = '000000000000'
 id_y = name_y + tsize_name[1] + 4
-tsize_id = draw_text(img, (base_x, id_y), f"({id})", size=18, color=(180,180,180,255), split_len=45, disable_dot_wrap=True)
+tsize_id = draw_text(img, (890, id_y), f"({id})", size=18, color=(180,180,180,255), split_len=45, disable_dot_wrap=True)
 
 # クレジット
 tx.text((1125, 694), "TakasumiBOT#7189", font=MPLUS_FONT_16, fill=(120,120,120,255))
 
-img.save("quote.png", quality=95)
+img.save("quote.png", quality=100)
