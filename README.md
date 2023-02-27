@@ -1,4 +1,11 @@
 # Make it a Quote
-- pilllow 9.4.0
-- pilmoji 2.0.2
-- textwrap3 0.9.2
+## 使い方
+- `pip install -r requirements.txt`を実行
+- `python main.py`で起動
+- `http://localhost:3000/`でアクセスする
+## パラメーター
+- name: 名前
+- tag: 4桁のID
+- id: ID
+- content: 内容
+- icon: アイコン
