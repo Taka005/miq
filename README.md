@@ -9,3 +9,5 @@
 - id: ID
 - content: 内容
 - icon: アイコン
+## イメージ
+![画像](https://cdn.discordapp.com/attachments/1049235380970467328/1079742439545393182/Takasumi_Quote.png)
