@@ -7,7 +7,6 @@ import warnings
 import base64
 import io
 
-# 警告無効化
 warnings.simplefilter("ignore")
 
 BASE_GD_IMAGE = Image.open("images/base-gd.png")
@@ -55,7 +54,6 @@ def draw_text(im,ofs,string,font="fonts/MPLUSRounded1c-Regular.ttf",size=16,colo
 
     draw_lines = []
 
-    # 計算
     for line in lines:
         tsize = fontObj.getsize(line)
 
@@ -67,7 +65,6 @@ def draw_text(im,ofs,string,font="fonts/MPLUSRounded1c-Regular.ttf",size=16,colo
         ofs_y += t_height + padding
         dy += t_height + padding
     
-    # 描画
     adj_y = -30 * (len(draw_lines)-1)
     for dl in draw_lines:
         with Pilmoji(im) as p:
@@ -77,7 +74,7 @@ def draw_text(im,ofs,string,font="fonts/MPLUSRounded1c-Regular.ttf",size=16,colo
 
     return (0,dy,real_y)
 
-def make(name,id,content,icon):
+def make(name,tag,id,content,icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -86,25 +83,18 @@ def make(name,id,content,icon):
     icon_filtered = ImageEnhance.Brightness(icon)
 
     img.paste(icon_filtered.enhance(0.7),(0,0))
-
-    # グラデーション描画
     img.paste(BASE_GD_IMAGE,(0,0),BASE_GD_IMAGE)
 
-    # テキスト
     tx = ImageDraw.Draw(img)
 
-    # 文章描画
     tsize_t = draw_text(img,(890,270),content,size=45,color=(255,255,255,255),split_len=16,auto_expand=True)
 
-    # 名前描画
     name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img,(890,name_y),name,size=25,color=(255,255,255,255),split_len=25,disable_dot_wrap=True)
+    tsize_name = draw_text(img,(890,name_y),f"{name}#{tag}",size=25,color=(255,255,255,255),split_len=25,disable_dot_wrap=True)
 
-    # ID描画
     id_y = name_y + tsize_name[1] + 4
     tsize_id = draw_text(img,(890,id_y),id,size=18,color=(180,180,180,255),split_len=45,disable_dot_wrap=True)
 
-    # TakasumiBOT描画
     tx.text((1125, 694),"TakasumiBOT#7189",font=MPLUS_FONT,fill=(120,120,120,255))
 
     file = io.BytesIO()
@@ -112,16 +102,16 @@ def make(name,id,content,icon):
     file.seek(0)
     return file
 
-# APiサーバー
 app = Flask(__name__)
 @app.route("/",methods=["GET"])
 def main():
     res = make(
-        request.args.get("name","名無し#0000"),
-        request.args.get("id","0000000000000000000"),
-        request.args.get("content","これはテストです"),
-        request.args.get("icon","https://cdn.discordapp.com/embed/avatars/0.png")
+        request.args.get("name") or "名無し",
+        request.args.get("tag") or "0000",
+        request.args.get("id") or "0000000000000000000",
+        request.args.get("content") or "これはテストです",
+        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
     )
     return send_file(res,mimetype="image/png")
-# 起動
+
 app.run(host="0.0.0.0",port=3000)
