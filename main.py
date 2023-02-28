@@ -95,7 +95,7 @@ def make(name,tag,id,content,icon):
     id_y = name_y + tsize_name[1] + 4
     tsize_id = draw_text(img,(890,id_y),id,size=18,color=(180,180,180,255),split_len=45,disable_dot_wrap=True)
 
-    tx.text((1125, 694),"TakasumiBOT#7189",font=MPLUS_FONT,fill=(120,120,120,255))
+    tx.text((1125,694),"TakasumiBOT#7189",font=MPLUS_FONT,fill=(120,120,120,255))
 
     file = io.BytesIO()
     img.save(file,format="PNG",quality=95)
