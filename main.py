@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from pilmoji import Pilmoji
-from flask import Flask, request, send_file
+from fastapi import FastAPI
+from fastapi.responses import Response
 import textwrap
 import requests
 import warnings
@@ -102,18 +103,19 @@ def gen(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route("/", methods=["GET"])
-def normal():
-    res = gen(
-        request.args.get("name") or "名無し",
-        request.args.get("tag") or "0000",
-        request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "これはテストです",
-        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
-    )
-    return send_file(res, mimetype="image/png")
+@app.get("/", responses={
+    200: {
+        "content": {"image/png": {}}
+    }
+})
+def main(
+    name: str = "名無し", tag: str = "0000", id: str = "0000000000000000000",
+    content: str = "これはテストです", icon: str = "https://cdn.discordapp.com/embed/avatars/0.png"
+):
+    res = gen(name, tag, id, content, icon)
+    return Response(content=res, media_type="image/png")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
