@@ -15,7 +15,7 @@ BASE_FLIPPED_IMAGE = Image.open("images/base-gd-flipped.png")
 BASE_IMAGE = Image.open("images/base.png")
 MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 branding = "Change this to the text of your choice"
-
+BaseURL = "https://api.example.com/"
 
 def draw_text(
     im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16,
@@ -221,7 +221,7 @@ def reverse():
 
 @app.route("/", methods=["GET"])
 def main():
-    return 'API URL: https://miq-api.mikanbot.com/<br><br>Endpoints<br>/original Original B&W MiaQ image<br>/colour MiaQ image with coloured icon<br>/reverse MiaQ image with flipped icon position<br><br>Query Parameters<br>name: Username<br>tag: Tag<br>id: User ID<br>icon: Icon URL<br>content: Message Content<br><br>Host your own API here! (https://github.com/maamokun/miq-api)<br>Original code from Taka005 (https://github.com/Taka005/miq)'
+    return 'API URL: ' + BaseURL + '<br><br>Endpoints<br>/original Original B&W MiaQ image<br>/colour MiaQ image with coloured icon<br>/reverse MiaQ image with flipped icon position<br><br>Query Parameters<br>name: Username<br>tag: Tag<br>id: User ID<br>icon: Icon URL<br>content: Message Content<br><br>Host your own API here! (https://github.com/maamokun/miq-api)<br>Original code from Taka005 (https://github.com/Taka005/miq)'
 
 
 if __name__ == "__main__":
