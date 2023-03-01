@@ -1,4 +1,5 @@
 # Make it a Quote
+- [Taka005のコード](https://github.com/Taka005/miq) を改造したものです。
 ## 使い方
 - `pip install -r requirements.txt`を実行
 - `python main.py`で起動
