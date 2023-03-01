@@ -25,4 +25,4 @@
 ## 反転
 ![画像](https://cdn.mikn.dev/miaq-reverse.png)
 ## 公開API
-https://miaq-api.mikanbot.com
+https://miq-api.mikanbot.com
