@@ -15,12 +15,7 @@ BASE_IMAGE = Image.open("images/base.png")
 MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 
 
-def draw_text(
-    im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16,
-    color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False,
-    disable_dot_wrap=False
-):
-
+def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
     draw = ImageDraw.Draw(im)
     fontObj = ImageFont.truetype(font, size=size)
 
@@ -80,8 +75,7 @@ def draw_text(
 
     return (0, dy, real_y)
 
-
-def make(name, tag, id, content, icon):
+def gen(name, tag, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -94,28 +88,22 @@ def make(name, tag, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = draw_text(img, (890, 270), content, size=45, color=(
-        255, 255, 255, 255), split_len=16, auto_expand=True)
+    tsize_t = draw_text(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(
-        255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(
-        180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
-    tx.text((1125, 694), "TakasumiBOT#7189",
-            font=MPLUS_FONT, fill=(120, 120, 120, 255))
+    tx.text((1125, 694), "TakasumiBOT#7189",font=MPLUS_FONT, fill=(120, 120, 120, 255))
 
     file = io.BytesIO()
     img.save(file, format="PNG", quality=95)
     file.seek(0)
     return file
 
-
 app = FastAPI()
-
 
 @app.get("/", responses={
     200: {
@@ -126,9 +114,8 @@ def main(
     name: str = "名無し", tag: str = "0000", id: str = "0000000000000000000",
     content: str = "これはテストです", icon: str = "https://cdn.discordapp.com/embed/avatars/0.png"
 ):
-    res = make(name, tag, id, content, icon)
+    res = gen(name, tag, id, content, icon)
     return Response(content=res, media_type="image/png")
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
