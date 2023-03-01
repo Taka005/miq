@@ -74,8 +74,7 @@ def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16,
 
     return (0, dy, real_y)
 
-# ノーマル
-def normal_gen(name, tag, id, content, icon):
+def gen(name, tag, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -103,50 +102,11 @@ def normal_gen(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-#色なし
-def color_gen(name, tag, id, content, icon):
-    img = BASE_IMAGE.copy()
-
-    icon = Image.open(io.BytesIO(requests.get(icon).content))
-    icon = icon.resize((720, 720), Image.LANCZOS)
-    icon_filtered = ImageEnhance.Brightness(icon)
-
-    img.paste(icon_filtered.enhance(0.7), (0, 0))
-    img.paste(BASE_GD_IMAGE, (0, 0), BASE_GD_IMAGE)
-
-    tx = ImageDraw.Draw(img)
-
-    tsize_t = draw_text(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
-
-    name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
-
-    id_y = name_y + tsize_name[1] + 4
-    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
-
-    tx.text((1125, 694), "TakasumBOT#7189",font=MPLUS_FONT, fill=(120, 120, 120, 255))
-
-    file = io.BytesIO()
-    img.save(file, format="PNG", quality=95)
-    file.seek(0)
-    return file
-
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def normal():
-    res = normal_gen(
-        request.args.get("name") or "名無し",
-        request.args.get("tag") or "0000",
-        request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "これはテストです",
-        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
-    )
-    return send_file(res, mimetype="image/png")
-
-@app.route("/color", methods=["GET"])
-def color():
-    res = color_gen(
+    res = gen(
         request.args.get("name") or "名無し",
         request.args.get("tag") or "0000",
         request.args.get("id") or "0000000000000000000",
