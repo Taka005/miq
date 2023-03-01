@@ -14,7 +14,11 @@ BASE_IMAGE = Image.open("images/base.png")
 MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 
 
-def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
+def draw_text(
+    im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16,
+    color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False,
+    disable_dot_wrap=False
+):
 
     draw = ImageDraw.Draw(im)
     fontObj = ImageFont.truetype(font, size=size)
@@ -125,4 +129,5 @@ def main():
     return send_file(res, mimetype="image/png")
 
 
-app.run(host="0.0.0.0", port=3000)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=3000)
