@@ -115,7 +115,7 @@ def main(
     content: str = "これはテストです", icon: str = "https://cdn.discordapp.com/embed/avatars/0.png"
 ):
     res = gen(name, tag, id, content, icon)
-    return Response(content=res, media_type="image/png")
+    return Response(content=res.read(), media_type="image/png")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
