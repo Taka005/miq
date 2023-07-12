@@ -260,9 +260,9 @@ def white():
     )
     return send_file(res, mimetype="image/png")
 
-@app.route("/riverseWhite", methods=["GET"])
+@app.route("/reverseWhite", methods=["GET"])
 def reverseWhite():
-    res = riverseWhiteMake(
+    res = reverseWhiteMake(
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
