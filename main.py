@@ -153,9 +153,9 @@ def reverseMake(name, tag, id, content, icon):
     tsize_name = drawText(img, (390, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = drawText(img, (390, id_y), id, size=18, color=(90, 90, 90, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = drawText(img, (390, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
-    tx.text((6, 694), BRAND, font=MPLUS_FONT, fill=(110, 110, 110, 255))
+    tx.text((6, 694), BRAND, font=MPLUS_FONT, fill=(120, 120, 120, 255))
 
     file = io.BytesIO()
     img.save(file, format="PNG", quality=95)
@@ -179,9 +179,35 @@ def whiteMake(name, tag, id, content, icon):
     tsize_name = drawText(img, (890, name_y), f"{name}#{tag}", size=25, color=(0, 0, 0, 0), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = drawText(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = drawText(img, (890, id_y), id, size=18, color=(90, 90, 90, 255), split_len=45, disable_dot_wrap=True)
 
-    tx.text((1122, 694), BRAND, font=MPLUS_FONT, fill=(120, 120, 120, 255))
+    tx.text((1122, 694), BRAND, font=MPLUS_FONT, fill=(110, 110, 110, 215))
+
+    file = io.BytesIO()
+    img.save(file, format="PNG", quality=95)
+    file.seek(0)
+    return file
+
+def reverseWhiteMake(name, tag, id, content, icon):
+    img = BASE_IMAGE.copy()
+
+    icon = Image.open(io.BytesIO(requests.get(icon).content))
+    icon = icon.resize((720, 720), Image.LANCZOS)
+
+    img.paste(icon, (570, 0), icon)
+    img.paste(BASE_RV_W_IMAGE, (0, 0), BASE_RV_W_IMAGE)
+
+    tx = ImageDraw.Draw(img)
+
+    tsize_t = drawText(img, (390, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
+
+    name_y = tsize_t[2] + 40
+    tsize_name = drawText(img, (390, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+
+    id_y = name_y + tsize_name[1] + 4
+    tsize_id = drawText(img, (390, id_y), id, size=18, color=(90, 90, 90, 255), split_len=45, disable_dot_wrap=True)
+
+    tx.text((6, 694), BRAND, font=MPLUS_FONT, fill=(110, 110, 110, 255))
 
     file = io.BytesIO()
     img.save(file, format="PNG", quality=95)
@@ -226,6 +252,17 @@ def reverse():
 @app.route("/white", methods=["GET"])
 def white():
     res = whiteMake(
+        request.args.get("name") or "SAMPLE",
+        request.args.get("tag") or "1234",
+        request.args.get("id") or "0000000000000000000",
+        request.args.get("content") or "Make it a Quote",
+        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
+    )
+    return send_file(res, mimetype="image/png")
+
+@app.route("/riverseWhite", methods=["GET"])
+def white():
+    res = riverseWhiteMake(
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
