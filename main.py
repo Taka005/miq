@@ -14,10 +14,9 @@ BASE_GD_IMAGE = Image.open("images/base-gd.png")
 BASE_FLIPPED_IMAGE = Image.open("images/base-gd-flipped.png")
 BASE_IMAGE = Image.open("images/base.png")
 MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
-branding = "Change this to the text of your choice"
-BaseURL = "https://api.example.com/"
+branding = "TakasumiBOT"
 
-def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
+ def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
     draw = ImageDraw.Draw(im)
     fontObj = ImageFont.truetype(font, size=size)
 
@@ -77,7 +76,7 @@ def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16,
 
     return (0, dy, real_y)
 
-def gen(name, tag, id, content, icon):
+def make(name, tag, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -171,7 +170,7 @@ def reversemake(name, tag, id, content, icon):
 
 app = Flask(__name__)
 
-@app.route("/original", methods=["GET"])
+@app.route("/", methods=["GET"])
 def original():
     res = make(
         request.args.get("name") or "SAMPLE",
@@ -183,7 +182,7 @@ def original():
     )
     return send_file(res, mimetype="image/png")
 
-@app.route("/colour", methods=["GET"])
+@app.route("/color", methods=["GET"])
 def colour():
     res = colourmake(
         request.args.get("name") or "SAMPLE",
@@ -206,10 +205,6 @@ def reverse():
             "icon") or "https://cdn.mikn.dev/MikanBot.png"
     )
     return send_file(res, mimetype="image/png")
-
-@app.route("/", methods=["GET"])
-def main():
-    return 'API URL: ' + BaseURL + '<br><br>Endpoints<br>/original Original B&W MiaQ image<br>/colour MiaQ image with coloured icon<br>/reverse MiaQ image with flipped icon position<br><br>Query Parameters<br>name: Username<br>tag: Tag<br>id: User ID<br>icon: Icon URL<br>content: Message Content<br><br>Host your own API here! (https://github.com/maamokun/miq-api)<br>Original code from Taka005 (https://github.com/Taka005/miq)'
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
