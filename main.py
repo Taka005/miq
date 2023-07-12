@@ -162,10 +162,36 @@ def reverseMake(name, id, content, icon):
     file.seek(0)
     return file
 
-def whiteMake(name, id, content, icon):
+def reverseColorMake(name, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
+    icon = icon.resize((720, 720), Image.LANCZOS)
+
+    img.paste(icon, (570, 0))
+    img.paste(BASE_RV_IMAGE, (0, 0), BASE_RV_IMAGE)
+
+    tx = ImageDraw.Draw(img)
+
+    tsize_t = drawText(img, (390, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
+
+    name_y = tsize_t[2] + 40
+    tsize_name = drawText(img, (390, name_y), f"@{name}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+
+    id_y = name_y + tsize_name[1] + 4
+    tsize_id = drawText(img, (390, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+
+    tx.text((6, 694), BRAND, font=MPLUS_FONT, fill=(120, 120, 120, 255))
+
+    file = io.BytesIO()
+    img.save(file, format="PNG", quality=95)
+    file.seek(0)
+    return file
+
+def whiteMake(name, id, content, icon):
+    img = BASE_IMAGE.copy()
+
+    icon = Image.open(io.BytesIO(requests.get(icon).content)).convert("RGBA")
     icon = icon.resize((720, 720), Image.LANCZOS)
 
     img.paste(icon, (0, 0), icon)
@@ -191,7 +217,7 @@ def whiteMake(name, id, content, icon):
 def reverseWhiteMake(name, id, content, icon):
     img = BASE_IMAGE.copy()
 
-    icon = Image.open(io.BytesIO(requests.get(icon).content))
+    icon = Image.open(io.BytesIO(requests.get(icon).content)).convert("RGBA")
     icon = icon.resize((720, 720), Image.LANCZOS)
 
     img.paste(icon, (570, 0), icon)
@@ -245,6 +271,17 @@ def reverse():
         request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
     )
     return send_file(res, mimetype="image/png")
+
+@app.route("/reverseColor", methods=["GET"])
+def reverseColor():
+    res = reverseColorMake(
+        request.args.get("name") or "SAMPLE",
+        request.args.get("id") or "0000000000000000000",
+        request.args.get("content") or "Make it a Quote",
+        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
+    )
+    return send_file(res, mimetype="image/png")
+
 
 @app.route("/white", methods=["GET"])
 def white():
