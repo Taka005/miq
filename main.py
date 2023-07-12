@@ -11,7 +11,7 @@ import os
 warnings.simplefilter("ignore")
 
 BASE_GD_IMAGE = Image.open("images/base-gd.png")
-BASE_FLIPPED_IMAGE = Image.open("images/base-gd-flipped.png")
+BASE_RV_IMAGE = Image.open("images/base-gd-rv.png")
 BASE_IMAGE = Image.open("images/base.png")
 MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 branding = "TakasumiBOT#7189"
@@ -139,7 +139,7 @@ def reversemake(name, tag, id, content, icon):
     icon_filtered = ImageEnhance.Brightness(icon)
 
     img.paste(icon_filtered.enhance(0.7), (570, 0))
-    img.paste(BASE_FLIPPED_IMAGE, (0, 0), BASE_FLIPPED_IMAGE)
+    img.paste(BASE_RV_IMAGE, (0, 0), BASE_RV_IMAGE)
 
     tx = ImageDraw.Draw(img)
 
