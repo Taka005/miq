@@ -20,7 +20,7 @@ BASE_IMAGE = Image.open("images/base.png")
 MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 BRAND = "TakasumiBOT#7189"
 
-def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
+def drawText(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
     draw = ImageDraw.Draw(im)
     fontObj = ImageFont.truetype(font, size=size)
 
@@ -93,13 +93,13 @@ def make(name, tag, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = draw_text(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
+    tsize_t = drawText(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = drawText(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = drawText(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
     tx.text((1122, 694), BRAND, font=MPLUS_FONT, fill=(120, 120, 120, 255))
 
@@ -108,7 +108,7 @@ def make(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-def colormake(name, tag, id, content, icon):
+def colorMake(name, tag, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -119,13 +119,13 @@ def colormake(name, tag, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = draw_text(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
+    tsize_t = drawText(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = drawText(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = drawText(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
     tx.text((1122, 694), BRAND,font=MPLUS_FONT, fill=(120, 120, 120, 255))
 
@@ -134,7 +134,7 @@ def colormake(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-def reversemake(name, tag, id, content, icon):
+def reverseMake(name, tag, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -147,13 +147,13 @@ def reversemake(name, tag, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = draw_text(img, (390, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
+    tsize_t = drawText(img, (390, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img, (390, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = drawText(img, (390, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = draw_text(img, (390, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = drawText(img, (390, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
     tx.text((6, 694), BRAND,font=MPLUS_FONT, fill=(120, 120, 120, 255))
 
@@ -162,7 +162,7 @@ def reversemake(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-def whitemake(name, tag, id, content, icon):
+def whiteMake(name, tag, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -175,13 +175,13 @@ def whitemake(name, tag, id, content, icon):
    
     tx = ImageDraw.Draw(img)
 
-    tsize_t = draw_text(img, (890, 270), content, size=45, color=(0, 0, 0, 0), split_len=16, auto_expand=True)
+    tsize_t = drawText(img, (890, 270), content, size=45, color=(0, 0, 0, 0), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(0, 0, 0, 0), split_len=25, disable_dot_wrap=True)
+    tsize_name = drawText(img, (890, name_y), f"{name}#{tag}", size=25, color=(0, 0, 0, 0), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = drawText(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
     tx.text((1122, 694), BRAND, font=MPLUS_FONT, fill=(120, 120, 120, 255))
 
@@ -193,7 +193,7 @@ def whitemake(name, tag, id, content, icon):
 app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
-def original():
+def main():
     res = make(
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
@@ -205,7 +205,7 @@ def original():
 
 @app.route("/color", methods=["GET"])
 def color():
-    res = colormake(
+    res = colorMake(
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
@@ -216,7 +216,7 @@ def color():
 
 @app.route("/reverse", methods=["GET"])
 def reverse():
-    res = reversemake(
+    res = reverseMake(
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
@@ -227,7 +227,7 @@ def reverse():
 
 @app.route("/white", methods=["GET"])
 def white():
-    res = whitemake(
+    res = whiteMake(
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
