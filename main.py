@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from pilmoji import Pilmoji
-from flask import Flask, request, send_file
+from fastapi import FastAPI
+from fastapi.responses import Response
 import textwrap
 import requests
 import warnings
@@ -17,12 +18,7 @@ MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
 branding = "Change this to the text of your choice"
 BaseURL = "https://api.example.com/"
 
-def draw_text(
-    im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16,
-    color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False,
-    disable_dot_wrap=False
-):
-
+def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
     draw = ImageDraw.Draw(im)
     fontObj = ImageFont.truetype(font, size=size)
 
@@ -82,8 +78,7 @@ def draw_text(
 
     return (0, dy, real_y)
 
-
-def make(name, tag, id, content, icon):
+def gen(name, tag, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -96,16 +91,13 @@ def make(name, tag, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = draw_text(img, (890, 270), content, size=45, color=(
-        255, 255, 255, 255), split_len=16, auto_expand=True)
+    tsize_t = draw_text(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(
-        255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(
-        180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
     tx.text((1125, 694), branding,
             font=MPLUS_FONT, fill=(120, 120, 120, 255))
@@ -222,7 +214,6 @@ def reverse():
 @app.route("/", methods=["GET"])
 def main():
     return 'API URL: ' + BaseURL + '<br><br>Endpoints<br>/original Original B&W MiaQ image<br>/colour MiaQ image with coloured icon<br>/reverse MiaQ image with flipped icon position<br><br>Query Parameters<br>name: Username<br>tag: Tag<br>id: User ID<br>icon: Icon URL<br>content: Message Content<br><br>Host your own API here! (https://github.com/maamokun/miq-api)<br>Original code from Taka005 (https://github.com/Taka005/miq)'
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
