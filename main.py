@@ -167,10 +167,8 @@ def whiteMake(name, tag, id, content, icon):
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
     icon = icon.resize((720, 720), Image.LANCZOS)
-    icon = icon.convert("L")
-    icon_filtered = ImageEnhance.Brightness(icon)
-    
-    img.paste(icon_filtered.enhance(0.7), (0, 0))
+
+    img.paste(icon, (0, 0), icon)
     img.paste(BASE_GD_W_IMAGE, (0, 0), BASE_GD_W_IMAGE)
    
     tx = ImageDraw.Draw(img)
