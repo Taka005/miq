@@ -261,7 +261,7 @@ def white():
     return send_file(res, mimetype="image/png")
 
 @app.route("/riverseWhite", methods=["GET"])
-def white():
+def reverseWhite():
     res = riverseWhiteMake(
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
