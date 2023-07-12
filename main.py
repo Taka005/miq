@@ -1,7 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from pilmoji import Pilmoji
-from fastapi import FastAPI
-from fastapi.responses import Response
+from flask import Flask, request, send_file
 import textwrap
 import requests
 import warnings
@@ -170,10 +169,7 @@ def reversemake(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-
-
 app = Flask(__name__)
-
 
 @app.route("/original", methods=["GET"])
 def original():
