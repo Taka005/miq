@@ -176,9 +176,8 @@ def original():
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "This isn't a very good quote unless you say something",
-        request.args.get(
-            "icon") or "https://cdn.mikn.dev/MikanBot.png"
+        request.args.get("content") or "Make it a Quote",
+        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
     )
     return send_file(res, mimetype="image/png")
 
@@ -188,9 +187,8 @@ def colour():
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "This isn't a very good quote unless you say something",
-        request.args.get(
-            "icon") or "https://cdn.mikn.dev/MikanBot.png"
+        request.args.get("content") or "Make it a Quote",
+        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
     )
     return send_file(res, mimetype="image/png")
 
@@ -200,9 +198,8 @@ def reverse():
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "This isn't a very good quote unless you say something",
-        request.args.get(
-            "icon") or "https://cdn.mikn.dev/MikanBot.png"
+        request.args.get("content") or "Make it a Quote",
+        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
     )
     return send_file(res, mimetype="image/png")
 
