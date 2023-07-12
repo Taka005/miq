@@ -7,6 +7,8 @@
 - `/` Make it a Quote画像
 - `/colour` カラーアイコン
 - `/reverse` アイコンの位置反転
+- `/white` 色反転
+- `/reverseWhite` 色反転・アイコンの位置反転
 ## パラメーター
 - name: 名前
 - tag: 4桁のID
