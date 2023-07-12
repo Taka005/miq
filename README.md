@@ -11,7 +11,6 @@
 - `/reverseWhite` 色反転・アイコンの位置反転
 ## パラメーター
 - name: 名前
-- tag: 4桁のID
 - id: ID
 - content: 内容
 - icon: アイコン

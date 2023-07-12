@@ -80,7 +80,7 @@ def drawText(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, 
 
     return (0, dy, real_y)
 
-def make(name, tag, id, content, icon):
+def make(name, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -96,7 +96,7 @@ def make(name, tag, id, content, icon):
     tsize_t = drawText(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = drawText(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = drawText(img, (890, name_y), f"@{name}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
     tsize_id = drawText(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
@@ -108,7 +108,7 @@ def make(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-def colorMake(name, tag, id, content, icon):
+def colorMake(name, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -122,7 +122,7 @@ def colorMake(name, tag, id, content, icon):
     tsize_t = drawText(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = drawText(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = drawText(img, (890, name_y), f"@{name}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
     tsize_id = drawText(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
@@ -134,7 +134,7 @@ def colorMake(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-def reverseMake(name, tag, id, content, icon):
+def reverseMake(name, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -150,7 +150,7 @@ def reverseMake(name, tag, id, content, icon):
     tsize_t = drawText(img, (390, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = drawText(img, (390, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = drawText(img, (390, name_y), f"@{name}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
     tsize_id = drawText(img, (390, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
@@ -162,7 +162,7 @@ def reverseMake(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-def whiteMake(name, tag, id, content, icon):
+def whiteMake(name, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -176,7 +176,7 @@ def whiteMake(name, tag, id, content, icon):
     tsize_t = drawText(img, (890, 270), content, size=45, color=(0, 0, 0, 0), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = drawText(img, (890, name_y), f"{name}#{tag}", size=25, color=(0, 0, 0, 0), split_len=25, disable_dot_wrap=True)
+    tsize_name = drawText(img, (890, name_y), f"@{name}", size=25, color=(0, 0, 0, 0), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
     tsize_id = drawText(img, (890, id_y), id, size=18, color=(90, 90, 90, 255), split_len=45, disable_dot_wrap=True)
@@ -188,7 +188,7 @@ def whiteMake(name, tag, id, content, icon):
     file.seek(0)
     return file
 
-def reverseWhiteMake(name, tag, id, content, icon):
+def reverseWhiteMake(name, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
@@ -202,7 +202,7 @@ def reverseWhiteMake(name, tag, id, content, icon):
     tsize_t = drawText(img, (390, 270), content, size=45, color=(0, 0, 0, 0), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = drawText(img, (390, name_y), f"{name}#{tag}", size=25, color=(0, 0, 0, 0), split_len=25, disable_dot_wrap=True)
+    tsize_name = drawText(img, (390, name_y), f"@{name}", size=25, color=(0, 0, 0, 0), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
     tsize_id = drawText(img, (390, id_y), id, size=18, color=(90, 90, 90, 255), split_len=45, disable_dot_wrap=True)
@@ -220,7 +220,6 @@ app = Flask(__name__)
 def main():
     res = make(
         request.args.get("name") or "SAMPLE",
-        request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
         request.args.get("content") or "Make it a Quote",
         request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
@@ -231,7 +230,6 @@ def main():
 def color():
     res = colorMake(
         request.args.get("name") or "SAMPLE",
-        request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
         request.args.get("content") or "Make it a Quote",
         request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
@@ -242,7 +240,6 @@ def color():
 def reverse():
     res = reverseMake(
         request.args.get("name") or "SAMPLE",
-        request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
         request.args.get("content") or "Make it a Quote",
         request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
@@ -253,7 +250,6 @@ def reverse():
 def white():
     res = whiteMake(
         request.args.get("name") or "SAMPLE",
-        request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
         request.args.get("content") or "Make it a Quote",
         request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
@@ -264,7 +260,6 @@ def white():
 def reverseWhite():
     res = reverseWhiteMake(
         request.args.get("name") or "SAMPLE",
-        request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
         request.args.get("content") or "Make it a Quote",
         request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
