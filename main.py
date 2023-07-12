@@ -14,9 +14,9 @@ BASE_GD_IMAGE = Image.open("images/base-gd.png")
 BASE_FLIPPED_IMAGE = Image.open("images/base-gd-flipped.png")
 BASE_IMAGE = Image.open("images/base.png")
 MPLUS_FONT = ImageFont.truetype("fonts/MPLUSRounded1c-Regular.ttf", size=16)
-branding = "TakasumiBOT"
+branding = "TakasumiBOT#7189"
 
- def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
+def draw_text(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, color=(0, 0, 0, 255), split_len=None, padding=4, auto_expand=False, disable_dot_wrap=False):
     draw = ImageDraw.Draw(im)
     fontObj = ImageFont.truetype(font, size=size)
 
@@ -97,39 +97,33 @@ def make(name, tag, id, content, icon):
     id_y = name_y + tsize_name[1] + 4
     tsize_id = draw_text(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
-    tx.text((1125, 694), branding,
-            font=MPLUS_FONT, fill=(120, 120, 120, 255))
+    tx.text((1122, 694), branding, font=MPLUS_FONT, fill=(120, 120, 120, 255))
 
     file = io.BytesIO()
     img.save(file, format="PNG", quality=95)
     file.seek(0)
     return file
 
-def colourmake(name, tag, id, content, icon):
+def colormake(name, tag, id, content, icon):
     img = BASE_IMAGE.copy()
 
     icon = Image.open(io.BytesIO(requests.get(icon).content))
     icon = icon.resize((720, 720), Image.LANCZOS)
-    icon_filtered = ImageEnhance.Brightness(icon)
 
-    img.paste(icon_filtered.enhance(0.7), (0, 0))
+    img.paste(icon, (0, 0))
     img.paste(BASE_GD_IMAGE, (0, 0), BASE_GD_IMAGE)
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = draw_text(img, (890, 270), content, size=45, color=(
-        255, 255, 255, 255), split_len=16, auto_expand=True)
+    tsize_t = draw_text(img, (890, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(
-        255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = draw_text(img, (890, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(
-        180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = draw_text(img, (890, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
-    tx.text((1125, 694), branding,
-            font=MPLUS_FONT, fill=(120, 120, 120, 255))
+    tx.text((1122, 694), branding,font=MPLUS_FONT, fill=(120, 120, 120, 255))
 
     file = io.BytesIO()
     img.save(file, format="PNG", quality=95)
@@ -149,19 +143,15 @@ def reversemake(name, tag, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = draw_text(img, (390, 270), content, size=45, color=(
-        255, 255, 255, 255), split_len=16, auto_expand=True)
+    tsize_t = draw_text(img, (390, 270), content, size=45, color=(255, 255, 255, 255), split_len=16, auto_expand=True)
 
     name_y = tsize_t[2] + 40
-    tsize_name = draw_text(img, (390, name_y), f"{name}#{tag}", size=25, color=(
-        255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
+    tsize_name = draw_text(img, (390, name_y), f"{name}#{tag}", size=25, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
 
     id_y = name_y + tsize_name[1] + 4
-    tsize_id = draw_text(img, (390, id_y), id, size=18, color=(
-        180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
+    tsize_id = draw_text(img, (390, id_y), id, size=18, color=(180, 180, 180, 255), split_len=45, disable_dot_wrap=True)
 
-    tx.text((15, 694), branding,
-            font=MPLUS_FONT, fill=(120, 120, 120, 255))
+    tx.text((8, 694), branding,font=MPLUS_FONT, fill=(120, 120, 120, 255))
 
     file = io.BytesIO()
     img.save(file, format="PNG", quality=95)
@@ -182,8 +172,8 @@ def original():
     return send_file(res, mimetype="image/png")
 
 @app.route("/color", methods=["GET"])
-def colour():
-    res = colourmake(
+def color():
+    res = colormake(
         request.args.get("name") or "SAMPLE",
         request.args.get("tag") or "1234",
         request.args.get("id") or "0000000000000000000",
