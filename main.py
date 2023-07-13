@@ -244,65 +244,27 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def main():
-    res = make(
-        request.args.get("name") or "SAMPLE",
-        request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "Make it a Quote",
-        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
-    )
+    type = request.args.get("type")
+    name = request.args.get("name") or "SAMPLE",
+    id = request.args.get("id") or "0000000000000000000",
+    content = request.args.get("content") or "Make it a Quote",
+    icon = request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
+
+    res    
+    if type == "color":
+        res = colorMake(name, id, content, icon)
+    elif type == "reverse":
+        res = reverseMake(name, id, content, icon)
+    elif type == "reverseColor":
+        res = reverseColorMake(name, id, content, icon)
+    elif type == "white":
+        res = whiteMake(name, id, content, icon)
+    elif type == "reverseWhite":
+        res = reverseWhiteMake(name, id, content, icon)
+    else:
+        res = make(name, id, content, icon)
+
     return send_file(res, mimetype="image/png")
-
-@app.route("/color", methods=["GET"])
-def color():
-    res = colorMake(
-        request.args.get("name") or "SAMPLE",
-        request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "Make it a Quote",
-        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
-    )
-    return send_file(res, mimetype="image/png")
-
-@app.route("/reverse", methods=["GET"])
-def reverse():
-    res = reverseMake(
-        request.args.get("name") or "SAMPLE",
-        request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "Make it a Quote",
-        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
-    )
-    return send_file(res, mimetype="image/png")
-
-@app.route("/reverseColor", methods=["GET"])
-def reverseColor():
-    res = reverseColorMake(
-        request.args.get("name") or "SAMPLE",
-        request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "Make it a Quote",
-        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
-    )
-    return send_file(res, mimetype="image/png")
-
-
-@app.route("/white", methods=["GET"])
-def white():
-    res = whiteMake(
-        request.args.get("name") or "SAMPLE",
-        request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "Make it a Quote",
-        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
-    )
-    return send_file(res, mimetype="image/png")
-
-@app.route("/reverseWhite", methods=["GET"])
-def reverseWhite():
-    res = reverseWhiteMake(
-        request.args.get("name") or "SAMPLE",
-        request.args.get("id") or "0000000000000000000",
-        request.args.get("content") or "Make it a Quote",
-        request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
-    )
-    return send_file(res, mimetype="image/png")
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
