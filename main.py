@@ -250,21 +250,36 @@ def main():
     content = request.args.get("content") or "Make it a Quote",
     icon = request.args.get("icon") or "https://cdn.discordapp.com/embed/avatars/0.png"
 
-    res    
     if type == "color":
-        res = colorMake(name, id, content, icon)
+        return send_file(
+            colorMake(name[0], id[0], content, icon),
+            mimetype="image/png"
+        )
     elif type == "reverse":
-        res = reverseMake(name, id, content, icon)
+        return send_file(
+            reverseMake(name[0], id[0], content, icon),
+            mimetype="image/png"
+        )
     elif type == "reverseColor":
-        res = reverseColorMake(name, id, content, icon)
+        return send_file(
+            reverseColorMake(name[0], id[0], content, icon),
+            mimetype="image/png"
+        )
     elif type == "white":
-        res = whiteMake(name, id, content, icon)
+        return send_file(
+            whiteMake(name[0], id[0], content, icon),
+            mimetype="image/png"
+        )
     elif type == "reverseWhite":
-        res = reverseWhiteMake(name, id, content, icon)
+        return send_file(
+            reverseWhiteMake(name[0], id[0], content, icon),
+            mimetype="image/png"
+        )
     else:
-        res = make(name, id, content, icon)
-
-    return send_file(res, mimetype="image/png")
+        return send_file(
+            make(name[0], id[0], content, icon),
+            mimetype="image/png"
+        )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
