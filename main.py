@@ -1,10 +1,10 @@
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from pilmoji import Pilmoji
 from flask import Flask, request, send_file
-import textwrap
 import requests
 import warnings
 import io
+from wrap import fw_wrap
 
 warnings.simplefilter("ignore")
 
@@ -52,7 +52,7 @@ def drawText(im, ofs, string, font="fonts/MPLUSRounded1c-Regular.ttf", size=16, 
     lines = []
 
     for line in pure_lines:
-        lines.extend(textwrap.wrap(line, width=split_len))
+        lines.extend(fw_wrap(line, width=split_len))
 
     dy = 0
 
@@ -91,7 +91,7 @@ def make(name, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = drawText(img, (890, 270), content, size=55, color=(255, 255, 255, 255), split_len=16)
+    tsize_t = drawText(img, (890, 270), content, size=55, color=(255, 255, 255, 255), split_len=20)
 
     name_y = tsize_t[2] + 40
     tsize_name = drawText(img, (890, name_y), f"@{name}", size=28, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
@@ -117,7 +117,7 @@ def colorMake(name, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = drawText(img, (890, 270), content, size=55, color=(255, 255, 255, 255), split_len=16)
+    tsize_t = drawText(img, (890, 270), content, size=55, color=(255, 255, 255, 255), split_len=20)
 
     name_y = tsize_t[2] + 40
     tsize_name = drawText(img, (890, name_y), f"@{name}", size=28, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
@@ -145,7 +145,7 @@ def reverseMake(name, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = drawText(img, (390, 270), content, size=55, color=(255, 255, 255, 255), split_len=16)
+    tsize_t = drawText(img, (390, 270), content, size=55, color=(255, 255, 255, 255), split_len=20)
 
     name_y = tsize_t[2] + 40
     tsize_name = drawText(img, (390, name_y), f"@{name}", size=28, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
@@ -171,7 +171,7 @@ def reverseColorMake(name, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = drawText(img, (390, 270), content, size=55, color=(255, 255, 255, 255), split_len=16)
+    tsize_t = drawText(img, (390, 270), content, size=55, color=(255, 255, 255, 255), split_len=20)
 
     name_y = tsize_t[2] + 40
     tsize_name = drawText(img, (390, name_y), f"@{name}", size=28, color=(255, 255, 255, 255), split_len=25, disable_dot_wrap=True)
@@ -197,7 +197,7 @@ def whiteMake(name, id, content, icon):
    
     tx = ImageDraw.Draw(img)
 
-    tsize_t = drawText(img, (890, 270), content, size=55, color=(0, 0, 0, 0), split_len=16)
+    tsize_t = drawText(img, (890, 270), content, size=55, color=(0, 0, 0, 0), split_len=20)
 
     name_y = tsize_t[2] + 40
     tsize_name = drawText(img, (890, name_y), f"@{name}", size=28, color=(0, 0, 0, 0), split_len=25, disable_dot_wrap=True)
@@ -223,7 +223,7 @@ def reverseWhiteMake(name, id, content, icon):
 
     tx = ImageDraw.Draw(img)
 
-    tsize_t = drawText(img, (390, 270), content, size=55, color=(0, 0, 0, 0), split_len=16)
+    tsize_t = drawText(img, (390, 270), content, size=55, color=(0, 0, 0, 0), split_len=20)
 
     name_y = tsize_t[2] + 40
     tsize_name = drawText(img, (390, name_y), f"@{name}", size=28, color=(0, 0, 0, 0), split_len=25, disable_dot_wrap=True)
